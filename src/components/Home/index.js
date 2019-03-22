@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
  
-import {    Form,Input,Button,Select , Row, Col,Card,Table ,Icon ,Divider,Modal, } from 'antd';
+import {    Form,Input,Button,Select , Row, Col,Card,Table ,Icon ,Divider,Modal,Radio } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const RadioGroup = Radio.Group;
 Form.create();
 class Home extends PureComponent {
     constructor( porps ){
         super( porps );
         this.state = {  
              visible: false,
+             formLayout: 'horizontal',
              columns:  [{
                 title: '编号',
                 dataIndex: 'key',
@@ -47,42 +49,12 @@ class Home extends PureComponent {
     render() {
 
         const { getFieldDecorator } = this.props.form;
-
-
-        //  columns = [{
-        //     title: '编号',
-        //     dataIndex: 'key',
-        //     // sortDirections: ['descend', 'ascend'],
-        //     // sorter: (a, b) => a.key - b.key,
-        //   }, {
-        //     title: '登录名称',
-        //     dataIndex: 'name',
-        //     defaultSortOrder: 'descend',
-        //     sorter: (a, b) => a.age - b.age,
-        //   }, {
-        //     title: '用户名称',
-        //     dataIndex: 'userName', 
-        //   },{
-        //       title: '电话',
-        //       dataIndex: 'phoneNum'
-        //   },{
-        //     title: '用户邮箱',
-        //     dataIndex: 'email'
-        // },{
-        //     title: '创建时间',
-        //     dataIndex: 'createTime'
-        // },{
-        //     title: '操作',
-        //     render: (text, record) => (
-        //         <span>
-        //           <a href="javascript:;"><Icon style={{ fontSize: 22 }} type="edit" /></a>
-        //           <Divider type="vertical" />
-        //           <a href="javascript:;"><Icon style={{ fontSize: 22 }} type="delete" /></a>
-        //         </span>
-        //       ),
-        // }];
-
-
+        const { formLayout } = this.state;
+        const formItemLayout = formLayout === 'horizontal' ? {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 18 },
+          } : null;
+   
           const data = [{
             key: '1',
             name: 'pengyu',
@@ -149,14 +121,14 @@ class Home extends PureComponent {
                     <Row gutter={24}>
                         <Col xl={4} lg={8} md={8} sm={8} xs={24}>
                         <FormItem >
-                            {getFieldDecorator('loginName', { })(
+                            {getFieldDecorator('loginname', { })(
                                 <Input   placeholder="请输入登录名称！" />
                             )}
                         </FormItem>
                         </Col>
                         <Col xl={4} lg={8} md={8} sm={8} xs={24}>
                         <FormItem>
-                            {getFieldDecorator('userName', { })(
+                            {getFieldDecorator('username', { })(
                                 <Input  placeholder="请输入用户名称！" />
                             )}
                         </FormItem>
@@ -207,7 +179,91 @@ class Home extends PureComponent {
                     maskClosable={ false }
                     >
                     
-                    
+                    <Form layout="horizontal">
+                        <Row gutter={24}>
+                            <Col xl={24} lg={24} md={24} sm={24} xs={24}>
+                             
+                                <FormItem label="登录名称" {...formItemLayout} >
+                                    {getFieldDecorator('loginName', { 
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入登录名称！',
+                                          }],
+                                    })(
+                                        <Input   placeholder="请输入登录名称！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="登录密码" {...formItemLayout} >
+                                    {getFieldDecorator('password', { 
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入登录密码！',
+                                          }],
+                                    })(
+                                        <Input   placeholder="请输入登录密码！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="用户名称" {...formItemLayout} >
+                                    {getFieldDecorator('userName', { 
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入用户名称！',
+                                          }],
+                                    })(
+                                        <Input   placeholder="请输入用户名称！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="用户性别" {...formItemLayout} >
+                                    {getFieldDecorator('sex', { })(
+                                        <RadioGroup onChange={this.onChange} value={this.state.value}>
+                                            <Radio value={0}>女</Radio>
+                                            <Radio value={1}>男</Radio>
+                                        </RadioGroup>
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="用户电话" {...formItemLayout} >
+                                    {getFieldDecorator('phoneNum', { 
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入用户电话！',
+                                          }],
+                                    })(
+                                        <Input   placeholder="请输入用户电话！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="用户邮箱" {...formItemLayout} >
+                                    {getFieldDecorator('email', { 
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入用户邮箱！',
+                                          }],
+                                    })(
+                                        <Input   placeholder="请输入用户邮箱！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="所属地区" {...formItemLayout} >
+                                    {getFieldDecorator('area', { })(
+                                        <Input   placeholder="请输入用户所属地区！" />
+                                    )}
+                                </FormItem>
+
+                                <FormItem label="所属机构" {...formItemLayout} >
+                                    {getFieldDecorator('mechanism', { })(
+                                        <Input   placeholder="请输入用户所属机构！" />
+                                    )}
+                                </FormItem>
+                                
+                             
+                            </Col>
+                        
+                        </Row>
+                    </Form>
 
 
                 </Modal>
